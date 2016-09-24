@@ -26,4 +26,11 @@ Route::post('/word/add', 'WordController@addWord');
 Route::get('/word/edit/{id}', 'WordController@getEdit');
 Route::post('/word/edit/{id}', 'WordController@updateWord');
 
+Route::get('/mass/word/all', 'MassController@allWords');
+Route::get('/mass/word/edit/{id}', 'MassController@getEdit');
+Route::post('/mass/word/edit/{id}', 'MassController@updateWord');
+Route::delete('/mass/word/{id}', 'MassController@delete');
+Route::get('/mass/word/add/{id}', 'MassController@addword');
+
 Route::get('/api/feedback', 'FeedbackController@feedBack');
+Route::get('/api/addword', 'FeedbackController@addWord');

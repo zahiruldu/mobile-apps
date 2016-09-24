@@ -10,8 +10,6 @@
                         <a href="{{url('/word/all')}}"> All Words</a>
                         |
                         <a href="{{url('/word/add')}}"> Add Word</a>
-                        |
-                        <a href="{{url('/mass/word/all')}}"> Crowd Words</a>
                     </div>
 
                 </div>
@@ -27,6 +25,7 @@
                                 <th>Bangla</th>
                                 <th>English</th>
                                 <th>Example</th>
+                                <th>Contributor</th>
                                 <th><a href="{{url('/word/add')}}" class="btn btn-primary">Add New</a></th>
                               </tr>
                             </thead>
@@ -37,9 +36,18 @@
                                 <td>{{$word->bn}}</td>
                                 <td>{{$word->en}}</td>
                                 <td>{{$word->desc}}</td>
+                                <td>{{$word->username}}<p>{{$word->email}}</p></td>
                                 <td>
-                                    <a href="{{url('/word/edit/'.$word->id)}}" class="btn btn-info">Edit</a>
-                                    <a href="" class="btn btn-danger">Del</a>
+                                    <a href="{{url('/mass/word/edit/'.$word->id)}}" class="btn btn-info">Edit</a>
+
+                                    <a href="{{url('/mass/word/add/'.$word->id)}}" class="btn btn-info">Add to</a>
+                                    
+
+                                    <form action="{{url('/mass/word/'.$word->id)}}" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit"  class="btn btn-danger" value="Del">
+                                    </form>
 
                                 </td>
                                 
