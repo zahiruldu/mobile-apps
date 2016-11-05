@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 Route::get('/api/words', 'WordController@index');
+Route::get('/api/totalwords', 'WordController@totalWords');
 Route::get('/word/all', 'WordController@allWords');
 Route::get('/word/add', 'WordController@getWordForm');
 Route::post('/word/add', 'WordController@addWord');
@@ -34,3 +35,6 @@ Route::get('/mass/word/add/{id}', 'MassController@addword');
 
 Route::get('/api/feedback', 'FeedbackController@feedBack');
 Route::get('/api/addword', 'FeedbackController@addWord');
+
+Route::get('/create', 'WordController@file');
+Route::get('/getfile','WordController@sendFile');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests;
 use App\Word;
@@ -26,6 +27,26 @@ class WordController extends Controller
     					 ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 
     	
+
+
+    }
+
+    public function totalWords()
+    {
+        $words = Word::get()->count();
+
+        // return response()->json([
+                    // 'name' => 'Abigail',
+                    // 'state' => 'CA'
+                    // ])
+        //      ->header('Access-Control-Allow-Origin', '*')
+        //      ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+
+        return response()->json($words, 200, [], JSON_UNESCAPED_UNICODE)
+                         ->header('Access-Control-Allow-Origin', '*')
+                         ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+
+        
 
 
     }
@@ -95,5 +116,25 @@ class WordController extends Controller
 
     	return redirect('word/all')->with('info','You have updated successfully!');
 
+    }
+
+
+    public function file()
+    {
+        $words = Word::all();
+
+         Storage::disk('public')->put('file.json', $words);
+        return $url;
+    }
+
+    public function sendFile()
+    {
+        $words = Word::all();
+
+         Storage::disk('public')->put('file.json', $words);
+
+        $url = Storage::disk('public')->url('file.json');
+
+        return $url;
     }
 }
