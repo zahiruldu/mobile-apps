@@ -130,8 +130,9 @@ class WordController extends Controller
     public function sendFile()
     {
         $words = Word::all();
+        $t = json_encode($words, JSON_UNESCAPED_UNICODE);
 
-         Storage::disk('public')->put('file.json', $words);
+         Storage::disk('public')->put('file.json', $t);
 
         $url = Storage::disk('public')->url('file.json');
 
