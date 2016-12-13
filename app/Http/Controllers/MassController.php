@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Crowdword;
 use App\Word;
+use App\User;
 
 class MassController extends Controller
 {
 
     public function allWords()
     {
-    	$words = Crowdword::paginate(10);
+    	$words = Crowdword::paginate(20);
     	return view('mass.all')
     			->with('words', $words);
     }
@@ -50,15 +51,42 @@ class MassController extends Controller
     {
     	$list = Crowdword::find($id);
 
-    	$word = new Word;
-    	$word->ar = $list->ar;
-    	$word->en = $list->en;
-    	$word->bn = $list->bn;
-    	$word->desc = $list->desc;
-    	$word->save();
+        $user = User::where('email', '=', $list->email)->first();
+        if ($user === null) {
+           // user doesn't exist, so creating new user
+            $u = new User;
+            $u->name = $list->username;
+            $u->email = $list->email;
+            $u->password = str_random(10);
+            $u->save();
+            $newid = $u->id;
 
-    	$list->delete();
-    	return redirect()->back();
+            // Adding the mass word to Dictionary
+            $word = new Word;
+            $word->ar = $list->ar;
+            $word->en = $list->en;
+            $word->bn = $list->bn;
+            $word->desc = $list->desc;
+            $word->user_id = $newid;
+            $word->save();
+
+            $list->delete();
+            return redirect()->back();
+
+        } else {
+            // User exist. so using existing data
+            $word = new Word;
+            $word->ar = $list->ar;
+            $word->en = $list->en;
+            $word->bn = $list->bn;
+            $word->desc = $list->desc;
+            $word->user_id = $user->id;
+            $word->save();
+
+            $list->delete();
+            return redirect()->back();
+
+        }
 
     }
 

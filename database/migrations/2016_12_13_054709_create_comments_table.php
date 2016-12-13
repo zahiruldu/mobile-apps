@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWordsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateWordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('words', function(Blueprint $table){
+        Schema::create('comments',function(Blueprint $table){
             $table->increments('id');
-            $table->string('ar');
-            $table->string('en');
-            $table->string('bn');
-            $table->text('desc');
-            $table->string('user_id');
+            $table->string('name');
+            $table->string('email');
+            $table->text('comment');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateWordsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('words');
+        Schema::drop('comments');
     }
 }

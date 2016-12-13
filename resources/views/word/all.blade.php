@@ -12,6 +12,8 @@
                         <a href="{{url('/word/add')}}"> Add Word</a>
                         |
                         <a href="{{url('/mass/word/all')}}"> Crowd Words</a>
+                        |
+                        <a href="{{url('/feedbacks')}}"> Feedbacks</a>
                     </div>
 
                 </div>
@@ -38,8 +40,10 @@
                                 <td>{{$word->en}}</td>
                                 <td>{{$word->desc}}</td>
                                 <td>
+                                    @if($word->user_id == Auth::user()->id || Auth::user()->user_type =='admin')
                                     <a href="{{url('/word/edit/'.$word->id)}}" class="btn btn-info">Edit</a>
                                     <a href="" class="btn btn-danger">Del</a>
+                                    @endif
 
                                 </td>
                                 

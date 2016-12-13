@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 use App\Word;
@@ -53,7 +54,7 @@ class WordController extends Controller
 
     public function allWords()
     {
-    	$words = Word::paginate(3);
+    	$words = Word::paginate(20);
     	return view('word.all')
     			->with('words', $words);
     }
@@ -90,6 +91,7 @@ class WordController extends Controller
         $word->en = $request->en;
         $word->bn = $request->bn;
         $word->desc = $request->desc;
+        $word->user_id = Auth::user()->id;
         $word->save();
 
         return redirect()->back()->with('info','The word has been added sucecssfully!');
@@ -101,7 +103,12 @@ class WordController extends Controller
     public function getEdit($id)
     {
     	$word = Word::find($id);
-    	return view('word.edit')->with('word',$word);
+        if($word->user_id == Auth::user()->id || Auth::user()->user_type == 'admin'){
+            
+            return view('word.edit')->with('word',$word);
+        }
+        return redirect()->back()->with('info','You are not authorized to edit this!');
+    	
 
     }
 

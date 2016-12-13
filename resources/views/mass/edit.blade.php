@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard
+                <div class="panel-heading">Edit Crowd Word
                      <div class="pull-right">
                         <a href="{{url('/mass/word/all')}}"> All Crowd Words</a>
                         |

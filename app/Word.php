@@ -8,7 +8,7 @@ class Word extends Model
 {
     
      protected $fillable = [
-        'ar', 'en', 'bn','desc',
+        'ar', 'en', 'bn','desc','user_id',
     ];
 
     /**
